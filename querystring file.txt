@@ -1,0 +1,28 @@
+
+var http = require('http');
+var q = require('querystring');
+http.createServer(function(req,res){
+    if(req.method == 'POST'){
+        var body = '';
+         req.on('data',chunk=>{
+             body+=chunk
+
+         });
+     req.on('end',()=>{
+         var result = q.parse(body);
+         res.write(result.n1);
+         if(result.n1 >100) res.write("number is grater then 100");
+         else 
+         { res.write("\n smaller then 100");
+        }
+            
+             res.end();
+         }) ;                 // req is instance of the Emitter class 
+    }                                          // chunk data is buffer either string
+    else{
+   res.write('<html><body><form action ="/" method ="post">' +
+   '<input type=text name="n1" placeholder = "enter number"/>' +
+   '<input type="submit" name="submit" value="save"/>')
+   
+    }
+}).listen(8080);
